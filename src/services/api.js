@@ -10,7 +10,7 @@ export async function getCharacters({ page = 1, name = '', status = '', gender =
   if (status) params.set('status', status)
   if (gender) params.set('gender', gender)
 
-  const res = await fetch(`${BASE_URL}/character/?${params.toString()}`)
+  const res = await fetch(`${BASE_URL}/character?${params.toString()}`)
 
   if (res.status === 404) {
     // La API devuelve 404 cuando ningun personaje coincide con el filtro
