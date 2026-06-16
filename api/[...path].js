@@ -2,10 +2,17 @@
 // Rick and Morty desde el servidor. El navegador habla solo con nuestro dominio,
 // evitando bloqueos de CORS/red en el cliente.
 export default async function handler(req, res) {
-  const path = req.url.replace(/^\/api\//, '')
+  // Vercel separa el segmento dinamico (path) del resto de query params.
+  const { path = [], ...query } = req.query
+  const segments = Array.isArray(path) ? path : [path]
+
+  const search = new URLSearchParams(query).toString()
+  const url =
+    `https://rickandmortyapi.com/api/${segments.join('/')}` +
+    (search ? `?${search}` : '')
 
   try {
-    const upstream = await fetch(`https://rickandmortyapi.com/api/${path}`)
+    const upstream = await fetch(url)
     const body = await upstream.text()
     res.setHeader('Content-Type', 'application/json')
     // Cache en el edge de Vercel para aliviar la API y acelerar respuestas
