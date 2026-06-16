@@ -1,4 +1,7 @@
-const BASE_URL = 'https://rickandmortyapi.com/api'
+// Las peticiones van al mismo origen (/api) y un proxy del servidor las reenvia
+// a la API real. Asi el navegador nunca hace una llamada cross-origin, que algunas
+// redes, antivirus o proxies bloquean.
+const BASE_URL = '/api'
 
 export async function getCharacters({ page = 1, name = '', status = '', gender = '' } = {}) {
   const params = new URLSearchParams()
