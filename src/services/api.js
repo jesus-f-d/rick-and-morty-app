@@ -1,7 +1,7 @@
 // Las peticiones van al mismo origen (/api) y un proxy del servidor las reenvia
 // a la API real. Asi el navegador nunca hace una llamada cross-origin, que algunas
-// redes, antivirus o proxies bloquean.
-const BASE_URL = '/api'
+// redes, antivirus o proxies bloquean. La base se configura via variable de entorno.
+const BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 export async function getCharacters({ page = 1, name = '', status = '', gender = '' } = {}) {
   const params = new URLSearchParams()

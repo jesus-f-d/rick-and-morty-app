@@ -4,19 +4,36 @@ Plataforma web para explorar los personajes de la serie Rick and Morty, construi
 
 ## Funcionalidades
 
+- Login simulado: guarda un token en `localStorage` y protege las rutas privadas
 - Listado de todos los personajes
 - Vista de detalle de un personaje específico
 - Paginación de resultados
-- Filtrado por nombre, estado y género
+- Filtrado por nombre (con *debounce*), estado y género
 - Marcar personajes como favoritos y verlos en una página aparte (se guardan en el navegador con localStorage)
+- Diseño responsive (móvil, tablet y desktop)
 
 ## Tecnologías
 
 - React 18
-- React Router DOM
+- React Router DOM (rutas, rutas dinámicas, `useNavigate`, rutas protegidas)
+- Context API (favoritos y autenticación)
+- Custom hooks (`useCharacters`, `useDebounce`) y hooks avanzados (`useRef`, `useCallback`, `useMemo`)
 - Vite
-- Fetch API
-- CSS
+- Fetch API + función serverless de proxy
+- Variables de entorno (`.env`)
+- CSS con media queries
+
+## Variables de entorno
+
+Copia `.env.example` a `.env`:
+
+```bash
+cp .env.example .env
+```
+
+| Variable | Descripción | Valor por defecto |
+|----------|-------------|-------------------|
+| `VITE_API_URL` | Base de las peticiones a la API | `/api` (proxy interno) |
 
 ## Instalación y uso
 
@@ -47,12 +64,15 @@ npm run preview
 
 ```
 src/
-├── components/      Componentes reutilizables (Navbar, CharacterCard, Filters, Pagination)
-├── context/         Contexto de favoritos (estado global)
-├── pages/           Vistas: Home, CharacterDetail, Favorites
+├── components/      Componentes reutilizables (Navbar, CharacterCard, Filters, Pagination, ProtectedRoute)
+├── context/         Estado global: AuthContext y FavoritesContext
+├── hooks/           Custom hooks: useCharacters, useDebounce
+├── pages/           Vistas: Login, Home, CharacterDetail, Favorites
 ├── services/        Llamadas a la API
 ├── App.jsx          Rutas de la aplicación
 └── main.jsx         Punto de entrada
+api/
+└── proxy.js         Función serverless (Vercel) que reenvía a la API real
 ```
 
 ## API

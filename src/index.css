@@ -57,7 +57,28 @@ a {
 
 .navbar nav {
   display: flex;
+  align-items: center;
   gap: 18px;
+}
+
+.navbar .user {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.navbar .logout {
+  background: transparent;
+  border: 1px solid #2a3f5a;
+  color: var(--text);
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.navbar .logout:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .navbar nav a {
@@ -286,4 +307,136 @@ h1 {
   color: var(--muted);
   font-size: 0.85rem;
   border-top: 1px solid #223450;
+}
+
+/* Login */
+.login-wrap {
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--surface);
+  border: 1px solid #223450;
+  border-radius: 14px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.login-card h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.login-hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0;
+}
+
+.login-card label {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.login-card input {
+  padding: 11px 14px;
+  border-radius: 8px;
+  border: 1px solid #2a3f5a;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.login-card input:focus {
+  outline: 2px solid var(--accent-2);
+}
+
+.login-card button {
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #0e1a2b;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ===== Responsive ===== */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 16px;
+  }
+
+  .navbar nav {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  .detail-card {
+    flex-direction: column;
+  }
+
+  .detail-card img {
+    width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .brand span {
+    font-size: 1.05rem;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .filters input,
+  .filters select {
+    width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .pagination {
+    gap: 10px;
+  }
 }

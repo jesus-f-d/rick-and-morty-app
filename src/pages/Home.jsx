@@ -1,40 +1,33 @@
-import { useEffect, useState } from 'react'
-import { getCharacters } from '../services/api.js'
+import { useCallback, useMemo, useState } from 'react'
 import CharacterCard from '../components/CharacterCard.jsx'
 import Filters from '../components/Filters.jsx'
 import Pagination from '../components/Pagination.jsx'
+import useCharacters from '../hooks/useCharacters.js'
+import useDebounce from '../hooks/useDebounce.js'
 
 export default function Home() {
   const [filters, setFilters] = useState({ name: '', status: '', gender: '', page: 1 })
-  const [data, setData] = useState({ results: [], info: { pages: 0 } })
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
 
-  useEffect(() => {
-    let active = true
-    setLoading(true)
-    setError('')
+  // El nombre se "debouncea" para no pedir a la API en cada tecla.
+  const debouncedName = useDebounce(filters.name, 400)
 
-    getCharacters(filters)
-      .then((res) => {
-        if (active) setData(res)
-      })
-      .catch((err) => {
-        if (active) setError(err.message)
-      })
-      .finally(() => {
-        if (active) setLoading(false)
-      })
+  // La query solo cambia cuando cambian los valores efectivos de busqueda.
+  const query = useMemo(
+    () => ({
+      name: debouncedName,
+      status: filters.status,
+      gender: filters.gender,
+      page: filters.page,
+    }),
+    [debouncedName, filters.status, filters.gender, filters.page],
+  )
 
-    return () => {
-      active = false
-    }
-  }, [filters])
+  const { data, loading, error } = useCharacters(query)
 
-  function changePage(page) {
+  const changePage = useCallback((page) => {
     setFilters((prev) => ({ ...prev, page }))
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  }, [])
 
   return (
     <section>
